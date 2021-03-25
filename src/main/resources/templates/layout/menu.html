@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="sidebar" th:fragment="menu">
+    <div class="sidebar-container">
+        <div class="sidebar-header">
+            <div class="brand">
+                LMS TOOL
+            </div>
+        </div>
+        <nav class="menu">
+            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                <li class="active">
+                    <a th:href="'/'+${tail}">
+                        <i class="fa fa-home"></i> 메인 </a>
+                </li>
+                <li>
+                    <a th:href="'/service'+${tail}">
+                        <i class="fa fa-volume-control-phone"></i> 서비스 관리
+                    </a>
+                </li>
+                <li>
+                    <a th:href="'/history'+${tail}">
+                        <i class="fa fa-tasks"></i> 발송 내역
+                    </a>
+                </li>
+
+
+            </ul>
+        </nav>
+    </div>
+
+</aside>
+</body>
+</html>
+

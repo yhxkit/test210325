@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <title>LMS Tool Est</title>
+        <th:block th:include="layout/head"></th:block>
+    </head>
+
+    <body class="loaded">
+        <div class="main-wrapper">
+            <div class="app" id="app">
+
+            <header th:replace="layout/header :: header"></header>
+            <aside th:replace="layout/menu :: menu"></aside>
+
+            <div class="sidebar-overlay" id="sidebar-overlay"></div>
+            <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+            <div class="mobile-menu-handle"></div>
+
+
+            <th:block layout:fragment="content"></th:block>
+            <!--<footer th:replace="layout/footer :: footer"></footer>-->
+
+
+            </div>
+        </div>
+
+        <script th:src="@{/js/vendor.js}"></script>
+        <script th:src="@{/js/app.js}"></script>
+        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <script th:src="@{/js/jquery.datetimepicker.full.js}"></script>
+        <script th:src="@{/js/datetimepicker_config.js}"></script>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            const rooturl = /*[[ ${Url.url} ]]*/ ;
+
+            const submiturl = /*[[ ${Url.submit} ]]*/;
+            const templateurl = /*[[ ${Url.template} ]]*/;
+
+            const eumLoginUrl = /*[[ ${Url.eum} ]]*/;
+
+            const serviceurl = /*[[ ${Url.service} ]]*/;
+            const historyurl = /*[[ ${Url.history} ]]*/;
+            const historylogurl = /*[[ ${Url.log} ]]*/;
+
+            const sessionedParams = window.location.href.replace(rooturl, '');
+            const session = parseSessionedParams()[0];
+            const access = parseSessionedParams()[1];
+            const tail = '?session='+session+'&access='+access;
+
+
+            const column1 = /*[[ ${directive.column1} ]]*/;
+            const column2 = /*[[ ${directive.column2} ]]*/;
+
+            /*]]>*/
+
+
+            function parseSessionedParams(){
+                let paramArr = sessionedParams.split("&");
+                let sessionArr = paramArr[0].split("?session=");
+                paramArr[0] = sessionArr[1];
+                paramArr[1] = paramArr[1].replace("access=", "");
+                return paramArr;
+            }
+
+            function relogin(){
+                window.location.href=eumLoginUrl;
+            }
+        </script>
+
+        <th:block layout:fragment="script"></th:block>
+
+
+    </body>
+</html>

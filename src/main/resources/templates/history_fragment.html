@@ -1,0 +1,95 @@
+<th:block layout:fragment="script">
+    <script th:src="@{/js/lms_historypage.js}"></script>
+</th:block>
+
+
+
+<div id="searchStandard" class="col-12 pull-left card card-footer">
+
+    <div>
+        <small><strong class="pull-left">조회 기준으로 모아보기</strong></small>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="startDateInfoForDayOrMonth" class="com-sm-2 form-control-label">
+            <small>Start date</small>
+        </label>
+        <div class="col-sm-4 input-group-sm">
+            <input type="text" class="form-control underlined" id="startDateInfoForDayOrMonth"
+                   placeholder="Start">
+        </div>
+        <label for="endDateInfoForDayOrMonth" class="com-sm-2 form-control-label">
+            <small>End date</small>
+        </label>
+        <div class="col-sm-4 input-group-sm">
+            <input type="text" class="form-control underlined" id="endDateInfoForDayOrMonth"
+                   placeholder="End">
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group row btn-group">
+        <label class="com-sm-4 form-control-label">
+            <small>서비스</small>
+        </label>
+
+        <div class="col-sm-4">
+            <select class="form-control form-control-sm" id="callbackForDailyOrMonthly">
+                <option value="entire">전체</option>
+                <option th:each="servicer: ${servicerList}" th:object="${servicer}"
+                        th:value="*{simpleServicer.callback}"
+                        th:text="*{simpleServicer.servicerName+'('+simpleServicer.callback+')'}"></option>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-sm btn-primary-outline com-sm-4" onclick="searchByDailyOrMonthly('MONTH')">월별 조회</button>
+        <button type="button" class="btn btn-sm btn-primary-outline com-sm-4" onclick="searchByDailyOrMonthly('DAY')">일별 조회</button>
+
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <div>
+        <small><strong class="pull-left">날짜 검색</strong></small>
+    </div>
+
+    <div class="form-group row">
+        <label for="startDateInfo" class="com-sm-2 form-control-label">
+            <small>Start date</small>
+        </label>
+        <div class="col-sm-4 input-group-sm">
+            <input type="text" class="form-control underlined" id="startDateInfo"
+                   placeholder="Start">
+        </div>
+        <label for="endDateInfo" class="com-sm-2 form-control-label">
+            <small>End date</small>
+        </label>
+        <div class="col-sm-4 input-group-sm">
+            <input type="text" class="form-control underlined" id="endDateInfo"
+                   placeholder="End">
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="callbackForDateSearch" class="com-sm-4 form-control-label">
+            <small>서비스</small>
+        </label>
+        <div class="col-sm-4">
+            <select class="boxed form-control form-control-sm" id="callbackForDateSearch">
+                <option value="entire">전체</option>
+                <option th:each="servicer: ${servicerList}" th:object="${servicer}"
+                        th:value="*{simpleServicer.callback}"
+                        th:text="*{simpleServicer.servicerName+'('+simpleServicer.callback+')'}"></option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-sm btn-block btn-primary-outline" onclick="searchByDate()">검색</button>
+        </div>
+
+    </div>
+
+</div>

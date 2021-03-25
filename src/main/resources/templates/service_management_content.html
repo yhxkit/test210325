@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" data-layout-decorate="~{layout/main_frame}">
+
+<th:block layout:fragment="content">
+
+    <button id="progressbarTrigger" data-toggle="modal" data-target="#progress-modal" data-backdrop="static"
+            data-keyboard="false" hidden></button>
+
+    <div class="row justify-content-center">
+        <div class="card col-lg-10">
+
+            <article class="content">
+
+                <div class="title-block">
+                    <h4 class="title pull-left"> 서비스 번호 관리 </h4>
+                </div>
+                <section class="section">
+
+
+                    <div class="row sameheight-container">
+
+
+                        <div class="col-6">
+                            <div class="card card-block sameheight-item">
+                                <section class="section">
+                                    <div class="card card-block">
+
+
+                                        <label class="control-label row">
+                                            <h5 class="title">등록된 서비스</h5>
+                                            <div class="ml-auto pull-right">
+                                                <label>
+                                                    <i style="cursor: pointer" class="fa fa-trash" data-toggle="modal" data-target="#del-confirm-modal"></i>
+                                                </label>
+                                            </div>
+                                        </label>
+
+
+                                        <div class="card items">
+                                            <ul class="item-list striped">
+
+
+                                                <li class="item item-list-header">
+                                                    <div class="item-row">
+
+                                                        <div class="item-col fixed item-col-check">
+                                                            <label class="item-check" id="select-all-items">
+                                                                <input type="checkbox" class="checkbox">
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="item-col item-col-header item-col-author">
+                                                            <div>
+                                                                <span>서비스명</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="item-col item-col-header item-col-author">
+                                                            <div>
+                                                                <span>번호</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+
+
+                                                <li class="item" th:each="servicer: ${servicerList}"
+                                                    th:object="${servicer}">
+                                                    <div class="item-row">
+
+                                                        <div class="item-col fixed item-col-check">
+                                                            <label class="item-check">
+                                                                <input type="checkbox" class="checkbox" name="check-inside">
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="item-col item-col-author">
+                                                            <div class="item-heading">서비스명~</div>
+                                                            <div>
+                                                                <span class="serviceName"
+                                                                      th:text="*{simpleServicer.servicerName}"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="item-col item-col-author">
+                                                            <div class="item-heading">서비스 번호~</div>
+                                                            <div>
+                                                                <span class="callback"
+                                                                      th:text="*{simpleServicer.callback}"></span>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-6">
+                            <div class="card card-block sameheight-item">
+                                <section class="section">
+                                    <div class="card card-block">
+
+
+                                        <label class="control-label row">
+                                            <h5 class="title">새 서비스 등록하기</h5>
+                                            <div class="ml-auto pull-right"><label></label> </div>
+                                        </label>
+
+
+
+                                        <form class="form">
+                                            <div class="form-group row">
+                                                <label for="serviceName"
+                                                       class="col-sm-3 form-control-label">서비스명</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="serviceName"
+                                                           placeholder="이름을 써주세요">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="callback"
+                                                       class="col-sm-3 form-control-label">전화번호</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="callback"
+                                                           placeholder="000-0000-0000">
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                        <button data-toggle="modal" data-target="#confirm-modal" type="button"
+                                                class="btn btn-primary-outline">등록
+                                        </button>
+
+                                        <span style="color: red;" id="errorarea"></span>
+
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+                </section>
+            </article>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="confirm-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <i class="fa fa-warning"></i> Alert</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>전송합니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="submitServicer();" class="btn btn-primary"
+                            data-dismiss="modal">Yes
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+    <div class="modal fade" id="del-confirm-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <i class="fa fa-warning"></i> Alert</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>삭제합니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="deleteSelectedServicer();" class="btn btn-primary"
+                            data-dismiss="modal">Yes
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+
+
+
+
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/lms_servicepage.js}"></script>
+</th:block>

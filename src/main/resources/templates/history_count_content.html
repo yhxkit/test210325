@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" data-layout-decorate="~{layout/main_frame}">
+
+<th:block layout:fragment="content">
+
+
+    <div class="row justify-content-center">
+        <div class="card col-lg-10">
+
+            <article class="content">
+                <section class="section">
+
+                    <div class="card card-block items">
+
+                        <div>
+                            <small><h4 class="title pull-left">일/월별 발송 내역 조회</h4></small>
+                        </div>
+
+
+                        <div>
+                            <th:block th:include="history_fragment"></th:block>
+                        </div>
+
+                        <div class="lms_log_table">
+                            <ul class="item-list striped">
+                                <li class="item item-list-header">
+                                    <div class="item-row">
+
+
+                                        <div class="item-col item-col-header item-col-date">
+                                            <div>
+                                                <span>발송일자</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="item-col item-col-header item-col-author">
+                                            <div>
+                                                <span>서비스</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="item-col item-col-header item-col-author">
+                                            <div>
+                                                <span>발송번호</span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="item-col item-col-header item-col-author">
+                                            <div>
+                                                <span>발송건수</span>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </li>
+
+
+                                <li class="item" th:each="log:${countLogList}" th:object="${log}">
+
+                                    <div class="item-row">
+
+
+
+                                        <div class="item-col item-col-date">
+                                            <div class="item-heading">발송 일자</div>
+                                            <div>
+                                                <!--<span th:if="*{getLogday()}" th:text="*{(logyear+'/'+logmonth +'/'+logday)}"></span>-->
+                                                <span th:text="*{(logyear+'/'+logmonth +'/'+logday)}"></span>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="item-col item-col-author">
+                                            <div class="item-heading">서비스</div>
+                                            <div>
+                                                <span th:text="*{getServicer().getServicerName()}"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="item-col item-col-author">
+                                            <div class="item-heading">발송번호</div>
+                                            <div>
+                                                <span th:text="*{getServicer().getCallback()}"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="item-col item-col-author">
+                                            <div class="item-heading">총 발송 건수</div>
+                                            <div>
+                                                <span th:text="*{logtotal}"></span>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </li>
+
+
+                            </ul>
+
+
+                        </div>
+
+
+                        <nav class="text-center">
+
+                            <ul class="pagination">
+                                <li th:if="${pagerData.get('prev') == true}" class="page-item">
+                                    <a th:href="'/history/log'+${tail}+${searchTail}+'&requiredPage='+${pagerData.get('pager')[0]-1}"
+                                       class="page-link">PREV</a>
+                                </li>
+                                <li th:each="pd :${pagerData.get('pager')}"
+                                    th:class="${pd == countLogList.getPageable().getPageNumber()+1 ? 'page-item active' : 'page-item'}">
+                                    <a th:href="'/history/log'+${tail}+${searchTail}+'&requiredPage='+${pd}" class="page-link"
+                                       th:text="${pd}"></a>
+                                </li>
+                                <li th:if="${pagerData.get('next') == true}" class="page-item">
+                                    <a th:href="'/history/log'+${tail}+${searchTail}+'&requiredPage='+${pagerData.get('pager')[#lists.size(pagerData.get('pager'))-1]+1}"
+                                       class="page-link">NEXT</a>
+                                </li>
+                            </ul>
+
+                            <!--<select id="numberPerPage" >-->
+                            <!--<option value="10">10</option>-->
+                            <!--<option value="20">20</option>-->
+                            <!--<option value="50">50</option>-->
+                            <!--<option value="100">100</option>-->
+                            <!--</select>-->
+                        </nav>
+
+                    </div>
+                </section>
+            </article>
+        </div>
+    </div>
+
+
+</th:block>
